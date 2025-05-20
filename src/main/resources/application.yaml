@@ -1,0 +1,19 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: STORAGE_SERVICE
+  r2dbc:
+    url: r2dbc:h2:mem:///storage_db;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: admin
+    password: admin
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/main-changelog.xml
+    default-schema: public
+    url: jdbc:h2:mem:storage_db;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    user: admin
+    password: admin
+logging:
+  level:
+    org.springframework.data.r2dbc: DEBUG
