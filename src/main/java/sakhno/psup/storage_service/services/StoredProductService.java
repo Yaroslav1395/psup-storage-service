@@ -1,7 +1,7 @@
-package sakhno.psup.storageservice.services;
+package sakhno.psup.storage_service.services;
 
 import reactor.core.publisher.Flux;
-import sakhno.psup.storageservice.models.StoredProductEntity;
+import sakhno.psup.storage_service.models.StoredProductEntity;
 
 public interface StoredProductService {
 

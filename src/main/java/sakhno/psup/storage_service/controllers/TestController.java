@@ -1,4 +1,4 @@
-package sakhno.psup.storageservice.controllers;
+package sakhno.psup.storage_service.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package sakhno.psup.storageservice;
+package sakhno.psup.storage_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

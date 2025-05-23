@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: storage_db
+    restart: always
+    environment:
+      POSTGRES_DB: storage_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5434:5432"
+    networks:
+      - storage-net
+  storage-service:
+    image: psup-storage/storage-service
+    container_name: storage_service
+    depends_on:
+      - postgres
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_R2DBC_URL=r2dbc:postgresql://postgres:5432/storage_db
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres:5432/storage_db
+    networks:
+      - storage-net
+
+networks:
+  storage-net:
+    driver: bridge

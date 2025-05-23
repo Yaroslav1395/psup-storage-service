@@ -1,4 +1,4 @@
-package sakhno.psup.storageservice.models;
+package sakhno.psup.storage_service.models;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
