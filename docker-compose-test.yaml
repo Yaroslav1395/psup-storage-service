@@ -11,7 +11,7 @@ services:
       - "5434:5432"
     networks:
       - storage-net
-  storage-service:
+  product-service:
     image: psup-storage/storage-service
     container_name: storage_service
     depends_on:
@@ -19,12 +19,19 @@ services:
     ports:
       - "8082:8082"
     environment:
-      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_PROFILES_ACTIVE=test
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres:5432/storage_db
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres:5432/storage_db
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - CONFIG_SERVER_USERNAME:myUsername
+      - CONFIG_SERVER_PASSWORD:mySecretPassword
+      - EUREKA_URL=http://eureka-server:8761/eureka
     networks:
       - storage-net
+      - psup-shared-net
 
 networks:
   storage-net:
     driver: bridge
+  psup-shared-net:
+    external: true
