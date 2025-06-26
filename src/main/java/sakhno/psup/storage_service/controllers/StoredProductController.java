@@ -9,7 +9,7 @@ import sakhno.psup.storage_service.models.StoredProductEntity;
 import sakhno.psup.storage_service.services.StoredProductService;
 
 @RestController
-@RequestMapping("stored/products")
+@RequestMapping("api/v1/storage-service/stored/products")
 @RequiredArgsConstructor
 public class StoredProductController {
     private final StoredProductService storedProductService;
