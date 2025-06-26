@@ -11,7 +11,7 @@ services:
       - "5434:5432"
     networks:
       - storage-net
-  product-service:
+  storage-service:
     image: psup-storage/storage-service
     container_name: storage_service
     depends_on:
