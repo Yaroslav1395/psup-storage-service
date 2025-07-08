@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import sakhno.psup.storage_service.services.web_client.ServicesPoints;
+import sakhno.psup.storage_service.utils.TraceContextUtils;
 
 import java.util.concurrent.TimeoutException;
 
@@ -37,11 +38,11 @@ public class ProductServiceTestClientImpl implements ProductServiceTestClient {
     private final CircuitBreaker circuitBreaker;
 
     public ProductServiceTestClientImpl(
-            @Qualifier("productServiceWebClient") WebClient storageWebClient,
+            @Qualifier("productServiceWebClient") WebClient productWebClient,
             RetryRegistry retryRegistry,
             TimeLimiterRegistry timeLimiterRegistry,
             CircuitBreakerRegistry circuitBreakerRegistry) {
-        this.webClient = storageWebClient;
+        this.webClient = productWebClient;
         this.retry = retryRegistry.retry("PRODUCT-SERVICE");
         this.timeLimiter = timeLimiterRegistry.timeLimiter("PRODUCT-SERVICE");
         this.circuitBreaker = circuitBreakerRegistry.circuitBreaker("PRODUCT-SERVICE");
@@ -49,18 +50,18 @@ public class ProductServiceTestClientImpl implements ProductServiceTestClient {
 
     @Override
     public Mono<String> successTestRequest() {
-        return webClient
+        return TraceContextUtils.withTraceParent(traceParent -> webClient
                 .get()
                 .uri(ServicesPoints.PRODUCT_TEST_SUCCESS.getPoint())
+                .headers(headers -> TraceContextUtils.setTraceToHeaders(traceParent, headers))
                 .retrieve()
                 .bodyToMono(String.class)
-                .doOnNext(response -> {
-                    System.out.println("Success received response in thread: " + Thread.currentThread().getName());
-                })
+                .doOnNext(response -> System.out.println("Success received response in thread: " + Thread.currentThread().getName()))
                 .transformDeferred(TimeLimiterOperator.of(timeLimiter))
                 .transformDeferred(CircuitBreakerOperator.of(circuitBreaker))
                 .transformDeferred(RetryOperator.of(retry))
-                .onErrorResume(Exception.class, this::fallback);
+                .onErrorResume(Exception.class, this::fallback)
+        );
     }
 
     @Override

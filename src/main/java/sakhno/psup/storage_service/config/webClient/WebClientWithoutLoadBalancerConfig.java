@@ -32,7 +32,7 @@ public class WebClientWithoutLoadBalancerConfig {
      * @return настроенный {@link WebClient} для обращения к STORAGE-SERVICE
      */
     @Bean
-    public WebClient storageServiceWebClient(WebClient.Builder builder) {
+    public WebClient productServiceWebClient(WebClient.Builder builder) {
         return builder
                 .baseUrl(productBaseUrl)
                 .build();

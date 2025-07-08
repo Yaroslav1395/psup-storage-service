@@ -106,6 +106,20 @@
             <artifactId>resilience4j-reactor</artifactId>
         </dependency>
 
+        <!--Зависимости для трассировки запросов (Zipkin)-->
+        <dependency>
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-reporter-brave</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing</artifactId>
+        </dependency>
+
         <!--Зависимости для ускорения разработки-->
         <dependency>
             <groupId>org.projectlombok</groupId>

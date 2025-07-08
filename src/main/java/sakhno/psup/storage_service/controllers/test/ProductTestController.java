@@ -1,4 +1,4 @@
-package sakhno.psup.storage_service.controllers;
+package sakhno.psup.storage_service.controllers.test;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
