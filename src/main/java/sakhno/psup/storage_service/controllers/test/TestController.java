@@ -1,4 +1,4 @@
-package sakhno.psup.storage_service.controllers;
+package sakhno.psup.storage_service.controllers.test;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
