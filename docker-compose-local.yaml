@@ -23,6 +23,8 @@ services:
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres:5432/storage_db
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres:5432/storage_db
       - PRODUCT_SERVICE_BASE_URL=http://product-service:8080
+    volumes:
+      - ~/Universal_Trade_Platform/logs/storage-service:/root/Universal_Trade_Platform/logs/storage-service
     networks:
       - storage-net
 
