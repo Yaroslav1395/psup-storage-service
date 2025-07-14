@@ -36,24 +36,27 @@ public class ProductServiceTestClientImpl implements ProductServiceTestClient {
     private final Retry retry;
     private final TimeLimiter timeLimiter;
     private final CircuitBreaker circuitBreaker;
+    private final TraceContextUtils traceContextUtils;
 
     public ProductServiceTestClientImpl(
             @Qualifier("productServiceWebClient") WebClient productWebClient,
             RetryRegistry retryRegistry,
             TimeLimiterRegistry timeLimiterRegistry,
-            CircuitBreakerRegistry circuitBreakerRegistry) {
+            CircuitBreakerRegistry circuitBreakerRegistry,
+            TraceContextUtils traceContextUtils) {
         this.webClient = productWebClient;
         this.retry = retryRegistry.retry("PRODUCT-SERVICE");
         this.timeLimiter = timeLimiterRegistry.timeLimiter("PRODUCT-SERVICE");
         this.circuitBreaker = circuitBreakerRegistry.circuitBreaker("PRODUCT-SERVICE");
+        this.traceContextUtils = traceContextUtils;
     }
 
     @Override
     public Mono<String> successTestRequest() {
-        return TraceContextUtils.withTraceParent(traceParent -> webClient
+        return traceContextUtils.withTraceParent(traceParent -> webClient
                 .get()
                 .uri(ServicesPoints.PRODUCT_TEST_SUCCESS.getPoint())
-                .headers(headers -> TraceContextUtils.setTraceToHeaders(traceParent, headers))
+                .headers(headers -> traceContextUtils.setTraceToHeaders(traceParent, headers))
                 .retrieve()
                 .bodyToMono(String.class)
                 .doOnNext(response -> System.out.println("Success received response in thread: " + Thread.currentThread().getName()))
