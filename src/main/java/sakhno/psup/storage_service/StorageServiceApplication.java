@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Hooks;
 
+//TODO: Перевести kafka в реактивный режим
 @SpringBootApplication
 public class StorageServiceApplication {
 

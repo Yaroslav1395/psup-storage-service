@@ -14,6 +14,15 @@ spring:
     url: jdbc:postgresql://localhost:5434/storage_db
     user: admin
     password: admin
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_BROKERS:localhost:9094,localhost:9095,localhost:9096}
+      group-id: storage-service
+      auto-offset-reset: latest
+      properties:
+        spring.json.trusted.packages: sakhno.psup.storage_service.events
+        spring.json.type.mapping: >
+          storageTestEvent:sakhno.psup.storage_service.events.consumer.StorageTestEvent
 resilience4j:
   circuitbreaker:
     configs:
