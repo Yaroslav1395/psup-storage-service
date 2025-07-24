@@ -1,5 +1,7 @@
 package sakhno.psup.storage_service.services.kafka.kafka_test;
 
+import io.micrometer.tracing.Span;
+import io.micrometer.tracing.Tracer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -9,6 +11,7 @@ import sakhno.psup.storage_service.config.kafka.KafkaTopicNames;
 import sakhno.psup.storage_service.dto.ProductKafkaTestDto;
 import sakhno.psup.storage_service.events.producer.ProductTestEvent;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.UUID;
 
@@ -17,6 +20,7 @@ import java.util.UUID;
 @Slf4j
 public class StorageTestEventProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final Tracer tracer;
 
     public void sendTestMessageToTopicManufactureTestEvent(ProductKafkaTestDto productKafkaTestDto) {
         log.info("Отработка отправки сообщения в очередь: {}", productKafkaTestDto.getMessage());
