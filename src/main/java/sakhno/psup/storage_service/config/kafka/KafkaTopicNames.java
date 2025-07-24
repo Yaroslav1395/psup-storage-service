@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum KafkaTopicNames {
 
-    MANUFACTURE_TEST_TOPIC("manufacture-test-topic");
+    MANUFACTURE_TEST_TOPIC("manufacture-test-topic"),
+    STORE_TEST_TOPIC("store-test-topic");
 
     private final String topicName;
 
